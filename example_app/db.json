@@ -1,0 +1,7 @@
+{
+    "db_type": "SQLite",
+    "connection": {
+        "path": "/opt/muthu/smart-crud/example_app/",
+        "db_name": "mydb.db"
+    }
+}
