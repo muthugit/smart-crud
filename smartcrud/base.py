@@ -25,4 +25,7 @@ class SmartCrud:
         self._repository = data
 
     def create_table(self, schema: dict):
-        self.db_engine.create_table(schema)
+        self.db_engine.create_model(schema)
+
+    def select(self, tbl_name):
+        return self.db_engine.select(tbl_name=tbl_name)
