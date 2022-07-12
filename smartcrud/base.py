@@ -22,6 +22,7 @@ class SmartCrud:
         if data['db_type'] == "SQLite":
             print("Setting SQLite")
             self.db_engine = SQLite(data['connection'])
+        self.db_engine.repository_path = value
         self._repository = data
 
     def create_table(self, schema: dict):

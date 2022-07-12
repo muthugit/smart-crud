@@ -1,4 +1,5 @@
 import abc
+import json
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Boolean, Float
 
 class BaseEngine(metaclass=abc.ABCMeta):
@@ -11,6 +12,7 @@ class BaseEngine(metaclass=abc.ABCMeta):
             "bool": Boolean
         }
         self.models = {}
+        self.repository_path = None
 
     def get_dtype(self, type_name):
         return self.dtypes[type_name]
@@ -33,6 +35,8 @@ class BaseEngine(metaclass=abc.ABCMeta):
             column = Column(col, self.get_dtype(tbl_schema['cols'][col]), nullable=nullable)
             tbl.append_column(column)
         meta.create_all(self.engine)
+        with open(f"{self.repository_path}/{tbl_schema['tbl_name']}.json", 'w') as f:
+            json.dump(tbl_schema['cols'], f, indent=2)
 
     def select(self, tbl_name):
         sql = f'select * from {tbl_name}'
